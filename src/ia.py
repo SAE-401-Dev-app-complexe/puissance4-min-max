@@ -1,0 +1,2 @@
+class IA(Joueur):
+    # TODO
