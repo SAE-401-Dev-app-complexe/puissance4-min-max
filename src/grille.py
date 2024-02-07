@@ -50,25 +50,70 @@ class Grille:
                 return i
         raise IndexError("Colonne remplie ! Veuillez jouer ailleurs.")
             
+    def alignementVertical(self):
+        """
+        Verifie un alignement vertical de 4
+        """
+        tableau = self.grille
+        for j in range(self.COLONNE):
+            for i in range(self.LIGNE - 3):
+                if all(tableau[i+k][j] == tableau[i][j] for k in range(1, 4)):
+                    return True
         
+    def alignementHorizontal(self , x ):
+        tableau = self.grille[x] 
+        for i in range(len(tableau)-3) :
+            if tableau[i] == tableau [i+1] == tableau[i+2] == tableau[i+3] :
+                return True
+        return False
+    
+    def alignementDiagonal(self):
+    # Vérification des diagonales de gauche à droite
+        for i in range(self.LIGNE - 3):
+            for j in range(self.COLONNE - 3):
+                if (self.grille[i][j] != " " and
+                    self.grille[i][j] == self.grille[i + 1][j + 1] == self.grille[i + 2][j + 2] == self.grille[i + 3][j + 3]):
+                    return True
+
+        # Vérification des diagonales de droite à gauche
+        for i in range(self.LIGNE - 3):
+            for j in range(3, self.COLONNE):
+                if (self.grille[i][j] != " " and
+                    self.grille[i][j] == self.grille[i + 1][j - 1] == self.grille[i + 2][j - 2] == self.grille[i + 3][j - 3]):
+                    return True
+
+        return False
 
 # Exemple d'utilisation
 ma_grille = Grille()
 try :
+    ma_grille.setCellule( 0 , "o")
+    print(ma_grille)
+    ma_grille.setCellule( 0 , "o")
+    print(ma_grille)
+    ma_grille.setCellule( 0 , "o")
+    print(ma_grille)
+    ma_grille.setCellule( 0 , "o")
+    print(ma_grille)
+    ma_grille.setCellule( 0 , "x")
+    print(ma_grille)
     ma_grille.setCellule( 1 , "x")
+    ma_grille.setCellule( 0 , "x")
     print(ma_grille)
-    ma_grille.setCellule( 1 , "o")
+    ma_grille.setCellule( 6, "o")
+    ma_grille.setCellule( 5, "o")
+    ma_grille.setCellule( 4, "o")
+    ma_grille.setCellule( 3, "o")
+    ma_grille.setCellule( 3, "o")
+    ma_grille.setCellule( 3, "o")
+    ma_grille.setCellule( 3, "o")
+    ma_grille.setCellule( 5, "o")
+    ma_grille.setCellule( 4, "o")
+    ma_grille.setCellule( 4, "o")
     print(ma_grille)
-    ma_grille.setCellule( 1 , "x")
-    print(ma_grille)
-    ma_grille.setCellule( 1 , "x")
-    print(ma_grille)
-    ma_grille.setCellule( 1 , "o")
-    print(ma_grille)
-    ma_grille.setCellule( 1 , "x")
-    print(ma_grille)
-    ma_grille.setCellule( 6, "0")
-    print(ma_grille)
+    print(ma_grille.alignementVertical())
+    print(ma_grille.alignementHorizontal(5))
+    print(ma_grille.alignementDiagonal())
 except IndexError as e :
     print(e.args[0])
 
