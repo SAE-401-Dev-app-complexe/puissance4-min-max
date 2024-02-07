@@ -1,14 +1,19 @@
 class Grille:
+
     COLONNE: int = 7
     LIGNE: int = 6
     AFFICHAGE : str = "+---+---+---+---+---+---+---+\n"
 
-
     def __init__(self):
+        """
+        Genere un tableau COLONNE x LIGNE remplie de chaine vide
+        """
         self.grille = [[" "] * self.COLONNE for _ in range(self.LIGNE)]
 
     def __str__(self):
-        # Convertir la grille en une chaîne de caractères
+        """
+        Convertie la grille en une chaîne de caractères
+        """
         grille_str = ""
         affichage_colone = ""
         for i in range(1 , self.COLONNE+1) :
@@ -21,14 +26,25 @@ class Grille:
         return grille_str
     
     def getCellule(self, x, y):
-        # Récupérer la valeur de la cellule aux coordonnées (x, y)
+        """
+        Récupére la valeur de la cellule aux coordonnées (x, y)
+        """
         return self.grille[y][x]
 
     def setCellule(self , x , valeur):
+        """ 
+        Modifie la valeur de la grille en x , y 
+        Y etant la dernière case de la colonne differente de
+        la valeur par defaut etant " "
+        """
         y = self.getDernierIndiceLibre(x)
         self.grille[y-1][x] = valeur
 
     def getDernierIndiceLibre(self , y):
+        """
+        Renvoie l'indice de la dernière case vide dans la colonne
+        @throws IndexError si colonne remplie
+        """
         for i in range (self.LIGNE , 0  , -1 ):
             if self.grille[i-1][y] == " " : 
                 return i
