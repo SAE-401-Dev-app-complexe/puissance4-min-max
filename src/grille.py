@@ -50,27 +50,36 @@ class Grille:
                 return i
         raise IndexError("Colonne remplie ! Veuillez jouer ailleurs.")
             
-    def alignementVertical(self):
+    def alignementVertical(self , y ):
         """
         Verifie un alignement vertical de 4
         """
         tableau = self.grille
-        for j in range(self.COLONNE):
-            for i in range(self.LIGNE - 3):
-                if all(tableau[i+k][j] == tableau[i][j] for k in range(1, 4)):
-                    return True
+        # Ligne - 3 sinon Execption puisque ligne[5] + 1 n'exite pas par ex.
+        for i in range(self.LIGNE - 3):
+            if all(tableau[i+k][y] == tableau[i][y] for k in range(1, 4)):
+                return True
         
     def alignementHorizontal(self , x ):
-        tableau = self.grille[x] 
+        """
+        Verifie un alignement dans la grille pour une ligne donnée
+        """
+        tableau = self.grille[x]
+        # len(tableau) - 3 -> meme principe que pour les ligne
         for i in range(len(tableau)-3) :
             if tableau[i] == tableau [i+1] == tableau[i+2] == tableau[i+3] :
                 return True
         return False
     
     def alignementDiagonal(self):
-    # Vérification des diagonales de gauche à droite
+        """
+        Verifie un alignement diagonal dans la grille
+        """
+        # Vérification des diagonale de gauche a droite
+        # ligne - 3 / colonne - 3 -> meme principe qu'au dessus
         for i in range(self.LIGNE - 3):
             for j in range(self.COLONNE - 3):
+                # On verifie que la case actuelle ne soit pas vide sinon renvoie true si 4 vide 
                 if (self.grille[i][j] != " " and
                     self.grille[i][j] == self.grille[i + 1][j + 1] == self.grille[i + 2][j + 2] == self.grille[i + 3][j + 3]):
                     return True
@@ -84,7 +93,6 @@ class Grille:
 
         return False
 
-# Exemple d'utilisation
 ma_grille = Grille()
 try :
     ma_grille.setCellule( 0 , "o")
@@ -111,7 +119,7 @@ try :
     ma_grille.setCellule( 4, "o")
     ma_grille.setCellule( 4, "o")
     print(ma_grille)
-    print(ma_grille.alignementVertical())
+    print(ma_grille.alignementVertical(0))
     print(ma_grille.alignementHorizontal(5))
     print(ma_grille.alignementDiagonal())
 except IndexError as e :
