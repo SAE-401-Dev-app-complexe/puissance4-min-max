@@ -5,7 +5,7 @@ class Grille:
 
 
     def __init__(self):
-        self.grille = [[0] * self.COLONNE for _ in range(self.LIGNE)]
+        self.grille = [[" "] * self.COLONNE for _ in range(self.LIGNE)]
 
     def __str__(self):
         # Convertir la grille en une chaîne de caractères
@@ -24,8 +24,35 @@ class Grille:
         # Récupérer la valeur de la cellule aux coordonnées (x, y)
         return self.grille[y][x]
 
+    def setCellule(self , x , valeur):
+        y = self.getDernierIndiceLibre(x)
+        self.grille[y-1][x] = valeur
+
+    def getDernierIndiceLibre(self , y):
+        for i in range (self.LIGNE , 0  , -1 ):
+            if self.grille[i-1][y] == " " : 
+                return i
+        raise IndexError("Colonne remplie ! Veuillez jouer ailleurs.")
+            
+        
 
 # Exemple d'utilisation
 ma_grille = Grille()
-print(ma_grille)
-print(ma_grille.getCellule(0,0))
+try :
+    ma_grille.setCellule( 1 , "x")
+    print(ma_grille)
+    ma_grille.setCellule( 1 , "o")
+    print(ma_grille)
+    ma_grille.setCellule( 1 , "x")
+    print(ma_grille)
+    ma_grille.setCellule( 1 , "x")
+    print(ma_grille)
+    ma_grille.setCellule( 1 , "o")
+    print(ma_grille)
+    ma_grille.setCellule( 1 , "x")
+    print(ma_grille)
+    ma_grille.setCellule( 6, "0")
+    print(ma_grille)
+except IndexError as e :
+    print(e.args[0])
+
