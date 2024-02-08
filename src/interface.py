@@ -1,3 +1,5 @@
+from jeu import *
+
 class Interface:
     """
     Interface du jeu de puissance 4 (affichage des menus, des résultats, etc.)
@@ -51,8 +53,23 @@ class Interface:
         Démarre le jeu
         """
 
-        print("Démarrer jeu")
+        nom = Interface.choisirNom()
+        # jetons = Interface.choisirJeton()
+        jeuEnCours = Jeu(nom)
+        print(jeuEnCours.getGrille())
 
+    def choisirNom() :
+        ERREUR_MAX = 5
+        nombreErreur = 0 
+        for _ in range (ERREUR_MAX) : 
+            nom = input("Veuillez choisir un pseudo.La touche entré validera")
+            if (len(nom) > 1 and not all(caractere.isspace() for caractere in nom)):
+                return nom.strip()
+            elif nombreErreur <= ERREUR_MAX :
+                nombreErreur += 1
+            else :
+                return "Joueur 1"
+            
     def afficherResultat():
         """
         Affiche le résultat

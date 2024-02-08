@@ -19,6 +19,7 @@ class Joueur(metaclass=ABCMeta):
         self.nom = nom
         self.formatJeton = formatJeton
         self.estIA = IA
+    
         
     @abstractmethod
     def jouerJeton(self)->Jeton:

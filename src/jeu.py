@@ -33,5 +33,4 @@ class Jeu:
         Joue un coup
         """
 
-        # TODO
-        pass
+    
