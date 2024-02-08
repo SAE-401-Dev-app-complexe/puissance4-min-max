@@ -1,6 +1,7 @@
-from Joueur import Joueur
-from Jeton import Jeton
-from SaisieException import SaisieException
+from joueur import Joueur
+from saisieException import SaisieException
+
+#from SaisieException import SaisieException
 
 class Humain(Joueur):
     """
@@ -9,18 +10,18 @@ class Humain(Joueur):
     def __init__(self, nom, formatJeton):
         super().__init__(nom, formatJeton, False)
 
-    def jouerJeton(self)->Jeton:
+    def jouerJeton(self):
         """
         Demande un entier sur la console correspondant à la colonne dans laquel il veut jouer
-        Si l'entrée est un entier, renvoie un Jeton
+        Si l'entrée est un entier, il est renvoyé
         Sinon renvoie une SaisieNonEntiereError
         """
-
-        saisie = input("Choissisez une colonne ou placer votre jeton")
-        if (not isinstance(saisie, int)):
+        try :
+            saisie = int(input("Choissisez une colonne ou placer votre jeton"))
+        except ValueError :
             raise SaisieException("Vous devez entrez un numéro de colonne compris entre 1 et 7")
 
-        return Jeton(self.formatJeton, saisie - 1)
+        return (saisie - 1, self.formatJeton)
 
 """ Test
 JoueurA = Humain("Jean","X")
