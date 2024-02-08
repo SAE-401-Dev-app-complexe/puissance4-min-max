@@ -2,7 +2,7 @@ class Grille:
 
     COLONNE: int = 7
     LIGNE: int = 6
-    AFFICHAGE : str = "+---+---+---+---+---+---+---+\n"
+    AFFICHAGE : str = "+---" * 7 + "+\n"
 
     def __init__(self):
         """
