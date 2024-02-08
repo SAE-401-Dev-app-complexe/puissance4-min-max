@@ -1,19 +1,24 @@
 from Jeton import Jeton
 from abc import ABCMeta, abstractmethod
-# Classe Abstraite représentant un joueur de puissance4
-class Joueur(metaclass=ABCMeta):
-    global formatJeton
-    global nom
-    
 
+class Joueur(metaclass=ABCMeta):
+    """
+    Classe abstraite représentant un joueur de puissance4
+    """
+
+    formatJeton
+    nom
+    estIA
+    
     @abstractmethod
-    def __init__(self,nom,formatJeton,IA):
+    def __init__(self, nom, formatJeton, IA):
         """
-        
+        Initialise un joueur avec un nom, un format de jeton et un booléen indiquant si le joueur est une IA
         """
-        self.formatJeton = formatJeton
+
         self.nom = nom
-        self.IA = IA
+        self.formatJeton = formatJeton
+        self.estIA = IA
         
     @abstractmethod
     def jouerJeton(self)->Jeton:
