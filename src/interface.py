@@ -1,21 +1,59 @@
 class Interface:
-    # TODO
+    """
+    Interface du jeu de puissance 4 (affichage des menus, des résultats, etc.)
+    """
 
-    def afficherMenuPrincipal(self):
+    def afficherMessageBienvenue():
         """
-        Affiche le menu principal
+        Affiche un message de bienvenue
         """
 
-        print("Menu principal")
+        MESSAGE_BIENVENUE = "Bienvenue sur ce jeu de puissance 4 !\n"
 
-    def demarrerJeu(self):
+        print(MESSAGE_BIENVENUE)
+
+    def afficherMenuPrincipal():
+        """
+        Affiche le menu principal : propose de jouer ou de quitter le jeu
+        """
+
+        MENU_PRINCIPAL = '—' * 30 + "\n\tMENU PRINCIPAL\n" + '—' * 30 + "\n\nEntrez 'J' pour jouer\nEntrez 'Q' pour quitter le jeu\n"
+
+        print(MENU_PRINCIPAL)
+
+        Interface.gererActionJoueur()
+
+    def gererActionJoueur():
+        """
+        Attends et gère l'action du joueur sur la console texte
+        """
+
+        CMD_JOUER = 'j'
+        CMD_QUITTER = 'q'
+
+        TXT_COMMANDE = "Commande : "
+        COMMANDE_INVALIDE = "\nLa commande entrée est invalide, souhaitez-vous jouer ?\n   Si oui, entrez 'J'\n   Sinon, entrez 'Q' pour quitter\n"
+
+        commande = input(TXT_COMMANDE)
+        commande = commande.lower().strip()
+
+        if commande == CMD_QUITTER:
+            Interface.quitterJeu()
+        elif commande == CMD_JOUER:
+            Interface.demarrerJeu()
+        else:
+            print(COMMANDE_INVALIDE)
+            Interface.gererActionJoueur()
+
+
+    def demarrerJeu():
         """
         Démarre le jeu
         """
 
         print("Démarrer jeu")
 
-    def afficherResultat(self):
+    def afficherResultat():
         """
         Affiche le résultat
         """
@@ -27,4 +65,7 @@ class Interface:
         Quitte le jeu
         """
         
-        print("Quitter jeu")
+        MESSAGE_QUITTER = "\nMerci d'avoir joué !"
+
+        print(MESSAGE_QUITTER)
+        exit(0)
