@@ -1,5 +1,5 @@
-from joueur import Joueur
-from saisieException import SaisieException
+from src.joueur import *
+from src.saisieException import SaisieException
 
 #from SaisieException import SaisieException
 

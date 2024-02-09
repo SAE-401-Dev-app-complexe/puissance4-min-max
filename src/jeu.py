@@ -1,13 +1,13 @@
-from grille import*
-from humain import*
-from ia import*
+from src.grille import*
+from src.humain import*
+from src.ia import*
 
 class Jeu:
     # TODO
-    def __init__(self , nom):
+    def __init__(self , nom , jetons):
         self.grille = Grille()
-        self.joueur1 = Humain(nom , "x")
-        self.joueur2 = IA("Ia" , "o" , self.grille)
+        self.joueur1 = Humain(nom , jetons)
+        self.joueur2 = IA("Ia" , "x" if jetons == "o" else "o" , self.grille)
 
     def getJoueur1(self):
         return self.joueur1
@@ -32,5 +32,6 @@ class Jeu:
         """
         Joue un coup
         """
+
 
     

@@ -1,3 +1,4 @@
+from src.joueur import *
 class IA(Joueur):
 
     def __init__(self, nom, formatJeton  , grille):

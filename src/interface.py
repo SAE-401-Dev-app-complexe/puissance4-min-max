@@ -1,4 +1,4 @@
-from jeu import *
+from src.jeu import *
 
 class Interface:
     """
@@ -54,15 +54,15 @@ class Interface:
         """
 
         nom = Interface.choisirNom()
-        # jetons = Interface.choisirJeton()
-        jeuEnCours = Jeu(nom)
+        jetons = Interface.choisirJeton()
+        jeuEnCours = Jeu(nom , jetons)
         print(jeuEnCours.getGrille())
 
     def choisirNom() :
         ERREUR_MAX = 5
         nombreErreur = 0 
         for _ in range (ERREUR_MAX) : 
-            nom = input("Veuillez choisir un pseudo.La touche entré validera")
+            nom = input("Veuillez choisir un pseudo.La touche entré validera : ")
             if (len(nom) > 1 and not all(caractere.isspace() for caractere in nom)):
                 return nom.strip()
             elif nombreErreur <= ERREUR_MAX :
@@ -70,6 +70,17 @@ class Interface:
             else :
                 return "Joueur 1"
             
+    def choisirJeton() : 
+        ERREUR_MAX = 5
+        nombreErreur  = 0 
+        for _ in range (ERREUR_MAX):
+            jeton = input("Voulez vous les ronds ou les croix ? (o pour rond , x pour croix) : ")
+            if (jeton.lower() == 'o' or jeton.lower() == "x" ) : 
+                return jeton
+            elif nombreErreur <= ERREUR_MAX :
+                nombreErreur += 1 
+            else :
+                return "x"
     def afficherResultat():
         """
         Affiche le résultat
