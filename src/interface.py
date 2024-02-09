@@ -1,6 +1,9 @@
 from src.jeu import *
 
 class Interface:
+
+    SEPARATION = '\n' + '—' * 60
+
     """
     Interface du jeu de puissance 4 (affichage des menus, des résultats, etc.)
     """
@@ -18,9 +21,19 @@ class Interface:
         Affiche le menu principal : propose de jouer ou de quitter le jeu
         """
 
-        MENU_PRINCIPAL = '—' * 30 + "\n\tMENU PRINCIPAL\n" + '—' * 30 + "\n\nEntrez 'J' pour jouer\nEntrez 'Q' pour quitter le jeu\n"
+        LONGUEUR_CONTENU_MENU = 39
+        LIGNE_HAUT_BAS = '+' + '—' * LONGUEUR_CONTENU_MENU + '+'
+        LIGNE_SEPARATION = "|" + '—' * LONGUEUR_CONTENU_MENU + "|"
+        LIGNE_VIDE = "|" + ' ' * LONGUEUR_CONTENU_MENU + "|"
 
-        print(MENU_PRINCIPAL)
+        print(LIGNE_HAUT_BAS)
+        print("|" + ' ' * 13 + "MENU PRINCIPAL" + ' ' * 12 + "|")
+        print(LIGNE_SEPARATION)
+        print(LIGNE_VIDE)
+        print("|  Entrez 'J' pour jouer contre une IA  |")
+        print("|  Entrez 'Q' pour quitter le jeu       |")
+        print(LIGNE_VIDE)
+        print(LIGNE_HAUT_BAS + '\n')
 
         Interface.gererActionJoueur()
 
@@ -52,9 +65,9 @@ class Interface:
         Démarre le jeu
         """
 
-        nom = Interface.choisirNom()
-        jetons = Interface.choisirJeton()
-        jeuEnCours = Jeu(nom , jetons)
+        pseudo = Interface.choisirPseudo()
+        jeton = Interface.choisirJeton()
+        jeuEnCours = Jeu(pseudo, jeton)
         Interface.boucleDeJeu(jeuEnCours)
 
     def boucleDeJeu(jeuEnCours):
@@ -70,7 +83,7 @@ class Interface:
         CHOIX_MIN = 1
         CHOIX_MAX = 7
         while (not positionValide) :
-            choix = input("Dans quelles colonne souhaitez vous jouer ?")
+            choix = input("Dans quelle colonne souhaitez vous jouer ? ")
             if (choix.isdigit() and int(choix) >= CHOIX_MIN and int(choix) <= CHOIX_MAX) :
                 try :
                     jeuEnCours.getGrille().setCellule(int(choix) - 1 , jeuEnCours.joueur1.formatJeton)
@@ -79,13 +92,16 @@ class Interface:
                 except IndexError as e :
                     print(e.args[0])
                 
-    def choisirNom() :
+    def choisirPseudo() :
         ERREUR_MAX = 5
-        nombreErreur = 0 
-        for _ in range (ERREUR_MAX) : 
-            nom = input("Veuillez choisir un pseudo.La touche entré validera : ")
-            if (len(nom) > 1 and not all(caractere.isspace() for caractere in nom)):
-                return nom.strip()
+        nombreErreur = 0
+
+        print(Interface.SEPARATION)
+
+        for i in range (ERREUR_MAX) : 
+            pseudo = input("\nEntrez un pseudonyme : ")
+            if (len(pseudo) > 1 and not all(caractere.isspace() for caractere in pseudo)):
+                return pseudo.strip()
             elif nombreErreur <= ERREUR_MAX :
                 nombreErreur += 1
             else :
@@ -93,15 +109,23 @@ class Interface:
             
     def choisirJeton() : 
         ERREUR_MAX = 5
-        nombreErreur  = 0 
-        for _ in range (ERREUR_MAX):
-            jeton = input("Voulez vous les ronds ou les croix ? (o pour rond , x pour croix) : ")
-            if (jeton.lower() == 'o' or jeton.lower() == "x" ) : 
+        nombreErreur  = 0
+
+        print(Interface.SEPARATION)
+
+        for i in range (ERREUR_MAX):
+            jeton = input("\nPréférez-vous jouer avec des jetons ronds ou des croix ?\n  - Entrez 'o' pour rond,\n  - Entrez 'x' pour croix\n\nJeton : ")
+            if (jeton.lower() == 'o' or jeton.lower() == "x" ) :
+                print('')
                 return jeton
             elif nombreErreur <= ERREUR_MAX :
-                nombreErreur += 1 
+                nombreErreur += 1
+                print("\nLe jeton entré est invalide.")
+                print(Interface.SEPARATION)
             else :
+                print('')
                 return "x"
+
     def afficherResultat():
         """
         Affiche le résultat
