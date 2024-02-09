@@ -4,7 +4,6 @@ class Interface:
     """
     Interface du jeu de puissance 4 (affichage des menus, des résultats, etc.)
     """
-
     def afficherMessageBienvenue():
         """
         Affiche un message de bienvenue
@@ -56,8 +55,30 @@ class Interface:
         nom = Interface.choisirNom()
         jetons = Interface.choisirJeton()
         jeuEnCours = Jeu(nom , jetons)
-        print(jeuEnCours.getGrille())
+        Interface.boucleDeJeu(jeuEnCours)
 
+    def boucleDeJeu(jeuEnCours):
+        print(jeuEnCours.grille)
+        gagne = False
+        while(not gagne) : 
+            if(jeuEnCours.getTourJoueur1) :
+                choix = Interface.choixColonne(jeuEnCours)
+    
+
+    def choixColonne(jeuEnCours):
+        positionValide = False
+        CHOIX_MIN = 1
+        CHOIX_MAX = 7
+        while (not positionValide) :
+            choix = input("Dans quelles colonne souhaitez vous jouer ?")
+            if (choix.isdigit() and int(choix) >= CHOIX_MIN and int(choix) <= CHOIX_MAX) :
+                try :
+                    jeuEnCours.getGrille().setCellule(int(choix) - 1 , jeuEnCours.joueur1.formatJeton)
+                    print(jeuEnCours.grille)
+                    positionValide = True
+                except IndexError as e :
+                    print(e.args[0])
+                
     def choisirNom() :
         ERREUR_MAX = 5
         nombreErreur = 0 
