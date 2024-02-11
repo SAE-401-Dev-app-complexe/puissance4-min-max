@@ -14,7 +14,7 @@ class Evaluateur():
         self.grille = grille
     
     def evaluerGrilleSelonJoueur(self,formatJeton,grille:Grille):
-        
+        #print("notOk")
         score = 0
         alignement4:List[Alignement] = []
         alignement3 :List[Alignement] = []
@@ -37,16 +37,16 @@ class Evaluateur():
             if(not self.grille.blocagePossible(ali2)):
                 alignement2.remove(ali2)
         if(formatJeton == self.jetonJoueur):
-            score -= len(alignement4)*100 - len(alignement3)*9-len(alignement2)*3 
+            score -= len(alignement4)*100 - len(alignement3)*9-len(alignement2)*3 + table[grille.lastColonnePlay.index][grille.lastIndexPlay]
         
         else : 
-            score += len(alignement4)*100 + len(alignement3)*9+len(alignement2)*3
+            score += len(alignement4)*100 + len(alignement3)*9+len(alignement2)*3+ table[grille.lastColonnePlay.index][grille.lastIndexPlay]
         return score
     
     def evaluerGrilleEnnemi(self,formatJeton,grille:Grille):
         
         score = 0
-        
+        #print("notOk")
         alignement4:List[Alignement] = []
         alignement3 :List[Alignement] = []
         alignement2 :List[Alignement] = []
@@ -66,8 +66,8 @@ class Evaluateur():
         for ali2 in alignement2:
             if(not self.grille.blocagePossible(ali2)):
                 alignement2.remove(ali2)
-        print(table[grille.lastColonnePlay.index][grille.lastIndexPlay])
-        score = -len(alignement4)*100 - len(alignement3)*9-len(alignement2)*3
+        #print(table[grille.lastColonnePlay.index][grille.lastIndexPlay])
+        score = -len(alignement4)*100 - len(alignement3)*9-len(alignement2)*3- table[grille.lastColonnePlay.index][grille.lastIndexPlay]
         
         
         return score
@@ -90,6 +90,26 @@ class Evaluateur():
                 
         return listeSansDoublons
     
+    def evaluerPositionJoueur (self,grille,jeton) :
+        score = 0
+        #grille.affichageGrille()
+        for colonne in grille.colonnes:
+            for ligne in range(grille.nbLigne):
+                if(colonne.getContenue(ligne) == jeton):
+                    
+                    score += table[colonne.getIndex()][ligne]
+                    #print(score)
+        return score
+    def evaluerPositionEnnemi (self,grille:Grille,jeton) :
+        score = 0
+        #grille.affichageGrille()
+        for colonne in grille.colonnes:
+            for ligne in range(grille.nbLigne):
+                if(colonne.getContenue(ligne) == self.jetonJoueur):
+                    
+                    score -= table[colonne.getIndex()][ligne]
+                    #print(score)
+        return score
     def compareTo(self,first:Alignement,other:Alignement):
         return (first.xdebut, first.ydebut) == \
                 (other.xdebut, other.ydebut)
@@ -104,9 +124,10 @@ grille.placeJeton(Jeton("X",3))
 grille.placeJeton(Jeton("O",2))
 grille.placeJeton(Jeton("O",2))
 grille.placeJeton(Jeton("O",2))
-##print(grille.lastIndexPlay)
+###print(grille.lastIndexPlay)
 grille.affichageGrille()
 eval =Evaluateur(grille)
-##print(eval.evaluerGrilleSelonJoueur("X",grille))
+###print(eval.evaluerGrilleSelonJoueur("X",grille))
 """
-table = [[0,2,7,7,2,0],[2,5,7,7,5,2],[5,7,10,10,7,5],[5,7,10,10,7,5],[5,7,10,10,7,5],[2,5,7,7,5,2],[0,2,7,7,2,0]]
+table = [[0,2,7,10,7,2,0],[2,5,7,10,7,5,2],[5,7,10,12,10,7,5],[7,12,15,15,12,7,7],[5,7,10,12,10,7,5],[2,5,7,10,7,5,2],[0,2,7,10,7,2,0]]
+print(table[3][2])
