@@ -74,24 +74,29 @@ class Grille:
                 return True
         return False
     
-def alignementDiagonal(self, ligne, colonne):
-    """
-    Vérifie un alignement diagonal dans la grille à partir d'une case donnée (ligne, colonne)
-    """
-    # Vérification des diagonales de gauche à droite
-    if colonne <= self.COLONNE - 4 and ligne <= self.LIGNE - 4:
-        if (self.grille[ligne][colonne] != " " and
-            self.grille[ligne][colonne] == self.grille[ligne + 1][colonne + 1] == self.grille[ligne + 2][colonne + 2] == self.grille[ligne + 3][colonne + 3]):
-            return True
+    def alignementDiagonal(self, ligne, colonne):
+        """
+        Vérifie un alignement diagonal dans la grille à partir d'une case donnée (ligne, colonne)
+        """
+        # Vérification des diagonales de gauche à droite
+        if colonne <= self.COLONNE - 4 and ligne <= self.LIGNE - 4:
+            if (self.grille[ligne][colonne] != " " and
+                self.grille[ligne][colonne] == self.grille[ligne + 1][colonne + 1] == self.grille[ligne + 2][colonne + 2] == self.grille[ligne + 3][colonne + 3]):
+                return True
 
-    # Vérification des diagonales de droite à gauche
-    if colonne >= 3 and ligne <= self.LIGNE - 4:
-        if (self.grille[ligne][colonne] != " " and
-            self.grille[ligne][colonne] == self.grille[ligne + 1][colonne - 1] == self.grille[ligne + 2][colonne - 2] == self.grille[ligne + 3][colonne - 3]):
-            return True
+        # Vérification des diagonales de droite à gauche
+        if colonne >= 3 and ligne <= self.LIGNE - 4:
+            if (self.grille[ligne][colonne] != " " and
+                self.grille[ligne][colonne] == self.grille[ligne + 1][colonne - 1] == self.grille[ligne + 2][colonne - 2] == self.grille[ligne + 3][colonne - 3]):
+                return True
 
-    return False
+        return False
 
+    def grillePleine(self) :
+        for i in self.grille[0] :
+            if i != " " :
+                return False
+        return True
 
 ma_grille = Grille()
 try :
@@ -122,6 +127,7 @@ try :
     print(ma_grille.alignementVertical(0))
     print(ma_grille.alignementHorizontal(5))
     # print(ma_grille.alignementDiagonal())
+    print(ma_grille.grillePleine())
 except IndexError as e :
     print(e.args[0])
 
