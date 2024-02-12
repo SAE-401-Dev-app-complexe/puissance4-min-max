@@ -8,6 +8,7 @@ class Jeu:
         self.grille = Grille()
         self.joueur1 = Humain(nom , jetons)
         self.joueur2 = IA("Ia" , "x" if jetons == "o" else "o" , self.grille)
+        self.tourJoueur1 = True
 
     def getJoueur1(self):
         return self.joueur1
@@ -32,6 +33,8 @@ class Jeu:
         """
         Joue un coup
         """
+        print(indiceColonne)
+        self.getGrille().setCellule(indiceColonne , self.getJoueur1().getFormatJeton())
 
 
     

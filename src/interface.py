@@ -58,10 +58,10 @@ class Interface:
         Interface.boucleDeJeu(jeuEnCours)
 
     def boucleDeJeu(jeuEnCours):
-        print(jeuEnCours.grille)
+        print(jeuEnCours.getGrille())
         gagne = False
         while(not gagne) : 
-            if(jeuEnCours.getTourJoueur1) :
+            if(jeuEnCours.getTourJoueur1()) :
                 choix = Interface.choixColonne(jeuEnCours)
     
 
@@ -73,8 +73,8 @@ class Interface:
             choix = input("Dans quelles colonne souhaitez vous jouer ?")
             if (choix.isdigit() and int(choix) >= CHOIX_MIN and int(choix) <= CHOIX_MAX) :
                 try :
-                    jeuEnCours.getGrille().setCellule(int(choix) - 1 , jeuEnCours.joueur1.formatJeton)
-                    print(jeuEnCours.grille)
+                    jeuEnCours.jouer(int(choix) - 1)
+                    print(jeuEnCours.getGrille())
                     positionValide = True
                 except IndexError as e :
                     print(e.args[0])
