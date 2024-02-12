@@ -68,7 +68,7 @@ class Interface:
         pseudo = Interface.choisirPseudo()
         jeton = Interface.choisirJeton()
         jeuEnCours = Jeu(pseudo, jeton)
-        Interface.boucleDeJeu(jeuEnCours)
+        jeuEnCours.lancerPartie()
 
     def boucleDeJeu(jeuEnCours):
         print(jeuEnCours.getGrille())

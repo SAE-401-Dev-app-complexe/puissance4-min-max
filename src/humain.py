@@ -19,7 +19,7 @@ class Humain(Joueur):
         except ValueError :
             raise SaisieException("Vous devez entrez un numéro de colonne compris entre 1 et 7")
 
-        return (saisie - 1, self.formatJeton)
+        return (saisie -1)
 
 """ Test
 JoueurA = Humain("Jean","X")

@@ -9,6 +9,8 @@ class Grille:
         Genere un tableau COLONNE x LIGNE remplie de chaine vide
         """
         self.grille = [[" "] * self.COLONNE for _ in range(self.LIGNE)]
+        self.derniereColonneJoue = None
+        self.derniereLigneJoue = None
 
     def __str__(self):
         """
@@ -40,7 +42,10 @@ class Grille:
         Y etant la dernière case de la colonne differente de
         la valeur par defaut etant " "
         """
+
         y = self.getDernierIndiceLibre(x)
+        self.derniereColonneJoue = x
+        self.derniereLigneJoue = y-1
         self.grille[y-1][x] = valeur
 
     def getDernierIndiceLibre(self , y):
@@ -59,9 +64,10 @@ class Grille:
         """
         tableau = self.grille
         # Ligne - 3 sinon Execption puisque ligne[5] + 1 n'exite pas par ex.
-        for i in range(self.LIGNE - 3):
-            if all(tableau[i+k][y] == tableau[i][y] for k in range(1, 4)):
+        for i in range(self.LIGNE-3):
+            if all(tableau[i+k][y] != " " and tableau[i+k][y] == tableau[i][y] for k in range(1, 4)):
                 return True
+        return False
         
     def alignementHorizontal(self , x ):
         """
@@ -70,33 +76,33 @@ class Grille:
         tableau = self.grille[x]
         # len(tableau) - 3 -> meme principe que pour les ligne
         for i in range(len(tableau)-3) :
-            if tableau[i] == tableau [i+1] == tableau[i+2] == tableau[i+3] :
+            if tableau[i] != " " and tableau[i] == tableau [i+1] == tableau[i+2] == tableau[i+3] :
                 return True
         return False
     
-def alignementDiagonal(self, ligne, colonne):
-    """
-    Vérifie un alignement diagonal dans la grille à partir d'une case donnée (ligne, colonne)
-    """
+
+    def alignementDiagonal(self):
     # Vérification des diagonales de gauche à droite
-    if colonne <= self.COLONNE - 4 and ligne <= self.LIGNE - 4:
-        if (self.grille[ligne][colonne] != " " and
-            self.grille[ligne][colonne] == self.grille[ligne + 1][colonne + 1] == self.grille[ligne + 2][colonne + 2] == self.grille[ligne + 3][colonne + 3]):
-            return True
+        for i in range(self.LIGNE - 3):
+            for j in range(self.COLONNE - 3):
+                if (self.grille[i][j] != " " and
+                    self.grille[i][j] == self.grille[i + 1][j + 1] == self.grille[i + 2][j + 2] == self.grille[i + 3][j + 3]):
+                    return True
 
-    # Vérification des diagonales de droite à gauche
-    if colonne >= 3 and ligne <= self.LIGNE - 4:
-        if (self.grille[ligne][colonne] != " " and
-            self.grille[ligne][colonne] == self.grille[ligne + 1][colonne - 1] == self.grille[ligne + 2][colonne - 2] == self.grille[ligne + 3][colonne - 3]):
-            return True
+        # Vérification des diagonales de droite à gauche
+        for i in range(self.LIGNE - 3):
+            for j in range(3, self.COLONNE):
+                if (self.grille[i][j] != " " and
+                    self.grille[i][j] == self.grille[i + 1][j - 1] == self.grille[i + 2][j - 2] == self.grille[i + 3][j - 3]):
+                    return True
 
-    return False
-
-
+        return False
 ma_grille = Grille()
 try :
+
     ma_grille.setCellule( 0 , "o")
     print(ma_grille)
+    
     ma_grille.setCellule( 0 , "o")
     print(ma_grille)
     ma_grille.setCellule( 0 , "o")
@@ -119,9 +125,10 @@ try :
     ma_grille.setCellule( 4, "o")
     ma_grille.setCellule( 4, "o")
     print(ma_grille)
+    
     print(ma_grille.alignementVertical(0))
     print(ma_grille.alignementHorizontal(5))
-    # print(ma_grille.alignementDiagonal())
+    print(ma_grille.alignementDiagonal())
+    print(ma_grille.getCellule(6,5))
 except IndexError as e :
     print(e.args[0])
-
