@@ -1,7 +1,5 @@
 from src.joueur import *
-from src.saisieException import SaisieException
-
-#from SaisieException import SaisieException
+from src.saisie_exception import SaisieException
 
 class Humain(Joueur):
     """
@@ -17,7 +15,7 @@ class Humain(Joueur):
         Sinon renvoie une SaisieNonEntiereError
         """
         try :
-            saisie = int(input("Choissisez une colonne ou placer votre jeton"))
+            saisie = int(input("Choissisez une colonne où placer votre jeton : "))
         except ValueError :
             raise SaisieException("Vous devez entrez un numéro de colonne compris entre 1 et 7")
 

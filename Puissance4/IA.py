@@ -12,18 +12,18 @@ class IA(Joueur):
         self.evaluateur:Evaluateur = evaluateur
         
     def playJeton(self) ->Jeton:
-        ##print(self.evaluateur.grille.lastColonnePlay.indexLastJetonPlace())
-        ##print(self.evaluateur.grille.lastIndexPlay)
+        ###print(self.evaluateur.grille.lastColonnePlay.indexLastJetonPlace())
+        ###print(self.evaluateur.grille.lastIndexPlay)
         """""
         ali = Alignement(self.evaluateur.grille.lastColonnePlay.indexLastJetonPlace(),self.evaluateur.grille.lastIndexPlay,self.evaluateur.jetonJoueur)
         liste = self.evaluateur.grille.getAlignement(3,ali,self.evaluateur.grille.lastColonnePlay)
         for ele in liste :
-            ##print(ele.xdebut)
-            ##print(ele.xFin)
-            ##print(ele.ydebut)
-            ##print(ele.yFin)
+            ###print(ele.xdebut)
+            ###print(ele.xFin)
+            ###print(ele.ydebut)
+            ###print(ele.yFin)
             saisie = self.evaluateur.grille.blocagePossible(ele)
-            ##print(saisie)
+            ###print(saisie)
             if(saisie!= None):
                 return Jeton(self.formatJeton,saisie)
         """
@@ -43,7 +43,7 @@ class IA(Joueur):
         indexCoup = 0
         
         for i in range(self.evaluateur.grille.nbColonne):
-            #print(i)
+            ##print(i)
             grilleCopie = copy.deepcopy(self.evaluateur.grille)
             
             if(grilleCopie.colonneRempli(i)):
@@ -61,12 +61,12 @@ class IA(Joueur):
                         
                         
                     listeScore2Ia.append(max(listeScore2))
-                    #print(listeScore2)
+                    ##print(listeScore2)
                     listeScoreEInd.append(min(listeScore2))
                     
                     indexCoup = listeScoreEInd.index(max(listeScoreEInd))
-        #print(listeScoreEInd)
-        #print(indexCoup)"""
+        ##print(listeScoreEInd)
+        ##print(indexCoup)"""
         """ for l in range(self.evaluateur.grille.nbColonne):
             grilleCopie = copy.deepcopy(self.evaluateur.grille)
             listeScoreE.append(self.simulerJetonEnnemi(l,grilleCopie))
@@ -78,17 +78,17 @@ class IA(Joueur):
         
             
         """"
-        #print("Score iA " + str(max(listeScore)*1.25))
-        #print("Score Joeuur " + str(max(listeScoreE)*0.85))
-        #print("Score Max Joeuur apres tour ia" + str(max(listeScore2Ia)*0.85))
-        #print("index ia " + str(listeScore.index(max(listeScore))))
-        #print("index Joeur " + str(listeScoreE.index(max(listeScoreE))))
-        #print("index Joeur apres ia " + str(listeScore2Ia.index(max(listeScore2Ia))))
-        #print("score ia apres indexJoueur " + str(min(listeScoreEInd)))
-        #print("score ia apres indexJoueur " + str(listeScore2Ia[listeScore.index(max(listeScore))]*0.85))
+        ##print("Score iA " + str(max(listeScore)*1.25))
+        ##print("Score Joeuur " + str(max(listeScoreE)*0.85))
+        ##print("Score Max Joeuur apres tour ia" + str(max(listeScore2Ia)*0.85))
+        ##print("index ia " + str(listeScore.index(max(listeScore))))
+        ##print("index Joeur " + str(listeScoreE.index(max(listeScoreE))))
+        ##print("index Joeur apres ia " + str(listeScore2Ia.index(max(listeScore2Ia))))
+        ##print("score ia apres indexJoueur " + str(min(listeScoreEInd)))
+        ##print("score ia apres indexJoueur " + str(listeScore2Ia[listeScore.index(max(listeScore))]*0.85))
         if(max(listeScoreEn2)-1 > max(listeScore2Ia)):
             indexCoup = listeScoreEn2.index(max(listeScoreEn2))
-            #print(indexCoup)
+            ##print(indexCoup)
         else :
             indexCoup =listeScore2Ia.index(max(listeScore2Ia))"""
         """if(listeScore2Ia[listeScore.index(max(listeScore))]>max(listeScore)*1.25 and listeScore2Ia[listeScore.index(max(listeScore))]>max(listeScoreE)*1.50):
@@ -97,11 +97,11 @@ class IA(Joueur):
             while (pasbon):
                 if(i>10):
                     indexCoup = random.randint(0,6)
-                    #print("ind")
+                    ##print("ind")
                     pasbon = False
                 i+= 1
                 
-                #print("reset")
+                ##print("reset")
                 indexCoup = listeScore.index(min(listeScore))
                 if(self.evaluateur.grille.colonneRempli(indexCoup)):
                     listeScore.remove(min(listeScore))
@@ -114,10 +114,10 @@ class IA(Joueur):
             
         elif (max(listeScoreE)*0.85 > max(listeScore)*1.25):
             indexCoup = listeScoreE.index(max(listeScoreE))
-            #print(indexCoup)
+            ##print(indexCoup)
         else :
             indexCoup =listeScore.index(max(listeScore))"""
-        return self.minMax(3,self.evaluateur.grille)
+        return self.minMax(5,self.evaluateur.grille)
     
     def minMax(self, profondeur,grille):
         listeScore = []
@@ -131,13 +131,14 @@ class IA(Joueur):
                 victoire = grilleCopie.placeJeton(Jeton(self.formatJeton,i))
                     
                 if(victoire):
-                    listeScore2.append(self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie)+20)
+                    #listeScore2.append(self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie)+20)
+                    listeScore2.append(self.evaluateur.evaluerPositionJoueur(grilleCopie,self.formatJeton)+500)
                 else :
                     
-                    #print("minmax")
+                    ##print("minmax")
                     
                     listeScore2.append(self.minF(profondeur-1,grilleCopie,i))
-                    print("min")
+                    #print("min")
                     print(listeScore2)
         return listeScore2.index(max(listeScore2))
     def max(self,profondeur,grille,position):
@@ -155,46 +156,50 @@ class IA(Joueur):
                     victoire = grilleCopie.placeJeton(Jeton(self.formatJeton,i))
                     
                     if(victoire):
-                        listeScore2.append(self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie))
+                        #listeScore2.append(self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie))
+                        listeScore2.append(self.evaluateur.evaluerPositionJoueur(grilleCopie,self.formatJeton)+200)
                     else :
                         
-                        #print("max")
+                        ##print("max")
                         listeScore2.append(self.minF(profondeur-1,grilleCopie,i))
-                        print("min")
-                        print(listeScore2)
-            #print(listeScore2)
+                        #print("min")
+                        #print(listeScore2)
+            ##print(listeScore2)
             return (max(listeScore2))
         else : 
-            return self.evaluateur.evaluerGrilleEnnemi(self.evaluateur.jetonJoueur,grille)
+            #return self.evaluateur.evaluerGrilleEnnemi(grille)
+            return self.evaluateur.evaluerPositionEnnemi(grille,self.evaluateur.jetonJoueur)
         
     
     def minF(self,profondeur,grilleCopie:Grille,position):
         valeur = 0
         listeScore = []
-        #print("ok")
+        ##print("ok")
         listeScore2 = []
         if (profondeur > 0):
             for i in range(self.evaluateur.grille.nbColonne):
                 grilleCopie2 = copy.deepcopy(grilleCopie)
-                #print("ok2")
+                ##print("ok2")
                 if(grilleCopie2.colonneRempli(i)):
                     listeScore2.append(10000)
                 else :
                     victoire = grilleCopie2.placeJeton(Jeton(self.evaluateur.jetonJoueur,i))
                     
                     if(victoire):
-                        listeScore2.append(self.evaluateur.evaluerGrilleEnnemi(self.evaluateur.jetonJoueur,grilleCopie2))
+                        #listeScore2.append(self.evaluateur.evaluerGrilleEnnemi(self.evaluateur.jetonJoueur,grilleCopie2))
+                        listeScore2.append(self.evaluateur.evaluerPositionEnnemi(grilleCopie,self.evaluateur.jetonJoueur)-300)
                     else :
                         
                         
-                        #print("min")
+                        ##print("min")
                         #grilleCopie2.affichageGrille()
                         listeScore2.append(self.max(profondeur-1,grilleCopie2,i))
-                        print(listeScore2)
+                        #print(listeScore2)
             
             return min(listeScore2)
         else : 
-            return self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie) 
+            #return self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie) 
+            return self.evaluateur.evaluerPositionJoueur(grilleCopie,self.formatJeton)+ self.evaluateur.evaluerGrilleEnnemi(self.evaluateur.jetonJoueur,grilleCopie)
     
     def simulerJeton(self,position,grilleCopie:Grille):
         if(grilleCopie.colonneRempli(position)):

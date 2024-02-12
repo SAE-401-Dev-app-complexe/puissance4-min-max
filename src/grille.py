@@ -16,13 +16,16 @@ class Grille:
         """
         grille_str = ""
         affichage_colone = ""
+
         for i in range(1 , self.COLONNE+1) :
             affichage_colone += "  " + str(i) + " "
-        grille_str += affichage_colone +"\n" 
+        grille_str += affichage_colone +"\n"
+
         for ligne in self.grille:
             grille_str += self.AFFICHAGE + "| "
             grille_str += " | ".join(map(str, ligne)) + " |\n"
-        grille_str += self.AFFICHAGE  + affichage_colone
+        grille_str += self.AFFICHAGE  + affichage_colone + '\n'
+
         return grille_str
     
     def getCellule(self, x, y):
