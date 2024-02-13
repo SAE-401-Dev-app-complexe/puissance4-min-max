@@ -6,9 +6,10 @@ class Jeu:
     # TODO
     def __init__(self , nom,jeton):
         self.grille:Grille = Grille()
-        self.joueur1 :Humain = Humain(nom , jeton)
-        self.joueur2 = Humain("Ia" , "o" if jeton == "x" else "x" )
-        #self.joueur2 = IA("Ia" , "o" if jeton == "x" else "x" , self.grille)
+        #self.joueur1 :Humain = Humain(nom , jeton)
+        #self.joueur2 = Humain("Ia" , "o" if jeton == "x" else "x" )
+        self.joueur1 = IA("Ia" , "x" , self.grille)
+        self.joueur2 = IA("Ia" , "o" if jeton == "x" else "x" , self.grille)
         self.joueurJouant = self.joueur1
 
     def getJoueur1(self):
@@ -35,7 +36,7 @@ class Jeu:
             self.tourJoueur(self.joueurJouant)
             
             print(self.grille)
-            self.joueurJouant = self.prochainJoueurJouant()
+            
             # Verification Victoire
             print("colonne " + str(self.grille.derniereColonneJoue) + "\nligne " + str(self.grille.derniereLigneJoue))
             victoire = self.grille.alignementHorizontal(self.grille.derniereLigneJoue)
@@ -45,6 +46,7 @@ class Jeu:
             if(victoire):
                 partieNonTermine= False
                 print("Le joueur " +str(self.joueurJouant.getNom())+ " a gagné")
+            self.joueurJouant = self.prochainJoueurJouant()
             
             
             

@@ -95,12 +95,18 @@ class Grille:
                 if (self.grille[i][j] != " " and
                     self.grille[i][j] == self.grille[i + 1][j - 1] == self.grille[i + 2][j - 2] == self.grille[i + 3][j - 3]):
                     return True
+        return False
 
     def grillePleine(self) :
         for i in self.grille[0] :
             if i != " " :
                 return False
         return True
+    
+    def colonneRempli(self,colonne :int) :
+        if(self.getCellule(colonne,0) != " "):
+            return True
+        return False
 
 ma_grille = Grille()
 try :
@@ -133,5 +139,7 @@ try :
     
     print(ma_grille.alignementVertical(0))
     print(ma_grille.alignementHorizontal(5))
+    print(ma_grille.getCellule(0,2))
+    print(ma_grille.colonneRempli(1))
 except IndexError as e :
     print(e.args[0])
