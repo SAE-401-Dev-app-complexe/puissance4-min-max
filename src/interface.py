@@ -43,6 +43,7 @@ class Interface:
         """
 
         CMD_JOUER = 'j'
+        CMD_IA = 'a'
         CMD_QUITTER = 'q'
 
         TXT_COMMANDE = "Commande : "
@@ -53,6 +54,8 @@ class Interface:
 
         if commande == CMD_QUITTER:
             Interface.quitterJeu()
+        elif commande == CMD_IA:
+            Interface.demarrerJeuIA()
         elif commande == CMD_JOUER:
             Interface.demarrerJeu()
         else:
@@ -68,6 +71,14 @@ class Interface:
         pseudo = Interface.choisirPseudo()
         jeton = Interface.choisirJeton()
         jeuEnCours = Jeu(pseudo, jeton)
+        jeuEnCours.lancerPartie()
+
+    def demarrerJeuIA():
+        """
+        Démarre le jeu en version IA
+        """
+        jeuEnCours = Jeu(None,None)
+        jeuEnCours.configurerPartieIA()
         jeuEnCours.lancerPartie()
 
     def boucleDeJeu(jeuEnCours):

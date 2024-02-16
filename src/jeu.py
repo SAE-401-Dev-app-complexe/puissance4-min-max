@@ -2,6 +2,7 @@ from src.grille import*
 from src.humain import*
 from src.ia import*
 from src.saisieError import SaisieError
+from src.interface import Interface
 class Jeu:
     # TODO
     def __init__(self , nom,jeton):
@@ -12,6 +13,9 @@ class Jeu:
         self.joueur2 = IA("Ia" , "o" if jeton == "x" else "x" , self.grille)
         self.joueurJouant = self.joueur1
 
+    def configurerPartieIA(self):
+        self.joueur1 = IA("Ia" , "x" , self.grille)
+        self.joueur2 = IA("Ia" , "o" if jeton == "x" else "x" , self.grille)
     def getJoueur1(self):
         return self.joueur1
       
@@ -46,7 +50,12 @@ class Jeu:
             if(victoire):
                 partieNonTermine= False
                 print("Le joueur " +str(self.joueurJouant.getNom())+ " a gagné")
-            self.joueurJouant = self.prochainJoueurJouant()
+            elif self.grille.grillePleine() :
+                partieNonTermine = False
+                print("Partie terminé aucun joueur n'a gagné")
+                Interface.quitterJeu()
+            else :
+                self.joueurJouant = self.prochainJoueurJouant()
             
             
             
