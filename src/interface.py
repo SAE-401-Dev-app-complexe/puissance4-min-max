@@ -1,12 +1,12 @@
 from src.jeu import *
 
 class Interface:
-
-    SEPARATION = '\n' + '—' * 60
-
     """
     Interface du jeu de puissance 4 (affichage des menus, des résultats, etc.)
     """
+
+    SEPARATION = '\n' + '—' * 60
+
     def afficherMessageBienvenue():
         """
         Affiche un message de bienvenue
@@ -70,38 +70,19 @@ class Interface:
 
         pseudo = Interface.choisirPseudo()
         jeton = Interface.choisirJeton()
+        print(Interface.SEPARATION + "\n")
+
         jeuEnCours = Jeu(pseudo, jeton)
-        jeuEnCours.lancerPartie()
+        jeuEnCours.lancerPartie(Interface)
 
     def demarrerJeuIA():
         """
         Démarre le jeu en version IA
         """
-        jeuEnCours = Jeu(None,None)
+        
+        jeuEnCours = Jeu(None, None)
         jeuEnCours.configurerPartieIA()
-        jeuEnCours.lancerPartie()
-
-    def boucleDeJeu(jeuEnCours):
-        print(jeuEnCours.getGrille())
-        gagne = False
-        while(not gagne) : 
-            if(jeuEnCours.getTourJoueur1()) :
-                choix = Interface.choixColonne(jeuEnCours)
-    
-
-    def choixColonne(jeuEnCours):
-        positionValide = False
-        CHOIX_MIN = 1
-        CHOIX_MAX = 7
-        while (not positionValide) :
-            choix = input("Dans quelle colonne souhaitez vous jouer ? ")
-            if (choix.isdigit() and int(choix) >= CHOIX_MIN and int(choix) <= CHOIX_MAX) :
-                try :
-                    jeuEnCours.jouer(int(choix) - 1)
-                    print(jeuEnCours.getGrille())
-                    positionValide = True
-                except IndexError as e :
-                    print(e.args[0])
+        jeuEnCours.lancerPartie(Interface)
                 
     def choisirPseudo() :
         ERREUR_MAX = 5
@@ -127,14 +108,12 @@ class Interface:
         for i in range (ERREUR_MAX):
             jeton = input("\nPréférez-vous jouer avec des jetons ronds ou des croix ?\n  - Entrez 'o' pour rond,\n  - Entrez 'x' pour croix\n\nJeton : ")
             if (jeton.lower() == 'o' or jeton.lower() == "x" ) :
-                print('')
-                return jeton
+                return jeton.lower()
             elif nombreErreur <= ERREUR_MAX :
                 nombreErreur += 1
                 print("\nLe jeton entré est invalide.")
                 print(Interface.SEPARATION)
             else :
-                print('')
                 return "x"
 
     def afficherResultat():

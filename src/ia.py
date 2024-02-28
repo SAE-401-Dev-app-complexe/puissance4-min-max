@@ -4,7 +4,6 @@ from src.grille import Grille
 import copy
 class IA(Joueur):
 
-    
     grille = [  [3 , 4 , 5 , 7 , 5 , 4 , 3 ] , 
                 [4 , 6 , 8 , 10 , 8 , 6 , 4] ,
                 [5 , 8 , 11 , 13 , 11 , 8 , 5] ,
@@ -12,16 +11,16 @@ class IA(Joueur):
                 [4 , 6 , 8 , 10 , 8 , 6 , 4] ,
                 [3 , 4 , 5 , 7 , 5 , 4 , 3]
              ]
-    def __init__(self, nom, formatJeton  , grille):
+
+    def __init__(self, nom, formatJeton, grille):
         super().__init__(nom, formatJeton, True)
         self.grille = grille
-
 
     def jouerJeton(self):
         """
         Applique l'algo MinMax pour décider d'une colonne dans lequel jouer
         """
-        return self.minMax(5,self.grille)
+        return self.minMax(5, self.grille)
       
     def trouverCoupPerdant(self):
         """
@@ -53,7 +52,7 @@ class IA(Joueur):
             grilleCopie : Grille = copy.deepcopy(grille)      
             #Si la colonne est rempli on veut que l'Ia ou l'adversaire ne joue pas dans cette colonne 
             #donc on donne un score bas pour que le max évite de jouer le coup           
-            if(grilleCopie.colonneRempli(i)):
+            if (grilleCopie.colonneRemplie(i)):
                 listeScoreMax.append(-10000)
             else :
                 grilleCopie.setCellule(i,self.formatJeton)
@@ -62,7 +61,7 @@ class IA(Joueur):
                 victoire |= grilleCopie.alignementVertical( grilleCopie.derniereColonneJoue)
                 victoire |= grilleCopie.alignementDiagonal()    
                 #Si la partie est gagné par l'IA on donne le score max possible pour forcer Le min max à prendre le coup
-                if(victoire):
+                if (victoire):
                     #listeScore2.append(self.evaluateur.evaluerGrilleSelonJoueur(self.formatJeton,grilleCopie)+20)
                     listeScoreMax.append(sys.maxsize)
                 else :
@@ -70,24 +69,26 @@ class IA(Joueur):
                     ##print("minmax")
                     #Sinon on ajoute le score a la colonne
                     listeScoreMax.append(self.minF(profondeur-1,grilleCopie))
-                    print(listeScoreMax)
+                    # print(listeScoreMax)
                     
         #On envoie l'index de la colonne qui est le max parmi toutes les colonnes
         return listeScoreMax.index(max(listeScoreMax))
+        
     def max(self,profondeur,grille):
-         """
+        """
         côté Max (IA)
         Il récupére le coup qui lui donne le plus de point (Max) ou qui minimise les points de l'adversaire tout en essayant de se bénéficier
         Pour minimiser il va prendre le Max de la liste reçu
         """
         
         listeScoreMax = []
+        
         #Si la profondeur à atteint 0 donc on a atteint le seuil de l'algo on envoie le score du Min sinon on continue a regarder en profondeur
         if (profondeur > 0):
              for i in range(Grille.COLONNE):
             
                 grilleCopie : Grille = copy.deepcopy(grille)                
-                if(grilleCopie.colonneRempli(i)):
+                if(grilleCopie.colonneRemplie(i)):
                     listeScoreMax.append(-10000)
                 else :
                     grilleCopie.setCellule(i,self.formatJeton)
@@ -124,7 +125,7 @@ class IA(Joueur):
                 grilleCopie : Grille = copy.deepcopy(grille)          
                 #Si la colonne est rempli on veut que l'Ia ou l'adversaire ne joue pas dans cette colonne 
                 #donc on donne un score élevé pour que le min évite de jouer le coup        
-                if(grilleCopie.colonneRempli(i)):
+                if(grilleCopie.colonneRemplie(i)):
                     listeScoreMin.append(10000)
                 else :
                     grilleCopie.setCellule(i, "o" if self.formatJeton == "x" else "x")

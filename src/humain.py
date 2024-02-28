@@ -5,21 +5,28 @@ class Humain(Joueur):
     """
     """
 
+    SEPARATION = '\n' + '—' * 60
+
     def __init__(self, nom, formatJeton):
         super().__init__(nom, formatJeton, False)
 
     def jouerJeton(self):
         """
-        Demande un entier sur la console correspondant à la colonne dans laquel il veut jouer
-        Si l'entrée est un entier, il est renvoyé
-        Sinon renvoie une SaisieNonEntiereError
+        Demande un entier sur la console correspondant à la colonne dans laquelle le joueur veut jouer.
         """
-        try :
-            saisie = int(input("Choissisez une colonne où placer votre jeton : "))
-        except ValueError :
-            raise SaisieException("Vous devez entrez un numéro de colonne compris entre 1 et 7")
 
-        return (saisie -1)
+        positionValide = False
+        CHOIX_MIN = 1
+        CHOIX_MAX = 7
+
+        while (not positionValide) :
+            choix = input("Dans quelle colonne souhaitez vous jouer ? ")
+            if (choix.isdigit() and int(choix) >= CHOIX_MIN and int(choix) <= CHOIX_MAX) :
+                positionValide = True
+            else :
+                print("\nVeuillez entrer un numéro de colonne compris entre 1 et 7 !\n" + self.SEPARATION + "\n")
+
+        return int(choix) - 1
 
 """ Test
 JoueurA = Humain("Jean","X")
