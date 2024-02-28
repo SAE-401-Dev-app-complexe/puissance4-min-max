@@ -73,7 +73,8 @@ class Interface:
         print(Interface.SEPARATION + "\n")
 
         jeuEnCours = Jeu(pseudo, jeton)
-        jeuEnCours.lancerPartie(Interface)
+
+        Interface.gererPartieCourante(jeuEnCours)
 
     def demarrerJeuIA():
         """
@@ -82,7 +83,26 @@ class Interface:
         
         jeuEnCours = Jeu(None, None)
         jeuEnCours.configurerPartieIA()
-        jeuEnCours.lancerPartie(Interface)
+        
+        Interface.gererPartieCourante(jeuEnCours)
+
+    def gererPartieCourante(jeuEnCours: Jeu):
+        """
+        Gère la partie en cours : les tours des joueurs, la fin de partie, etc.
+        """
+
+        partieTerminee = False
+
+        print(jeuEnCours.getGrille())
+
+        while not partieTerminee:
+            jeuEnCours.gererTourJoueur()
+            print(jeuEnCours.getGrille())
+
+            partieTerminee = jeuEnCours.verifierFinPartie()
+
+            if not partieTerminee:
+                jeuEnCours.inverserJoueurJouant()
                 
     def choisirPseudo() :
         ERREUR_MAX = 5
@@ -99,7 +119,11 @@ class Interface:
             else :
                 return "Joueur 1"
             
-    def choisirJeton() : 
+    def choisirJeton() :
+        """
+        Demande au joueur de choisir un jeton
+        """
+
         ERREUR_MAX = 5
         nombreErreur  = 0
 

@@ -10,7 +10,7 @@ class Humain(Joueur):
     def __init__(self, nom, formatJeton):
         super().__init__(nom, formatJeton, False)
 
-    def jouerJeton(self):
+    def jouerJeton(self, grille):
         """
         Demande un entier sur la console correspondant à la colonne dans laquelle le joueur veut jouer.
         """
@@ -22,11 +22,14 @@ class Humain(Joueur):
         while (not positionValide) :
             choix = input("Dans quelle colonne souhaitez vous jouer ? ")
             if (choix.isdigit() and int(choix) >= CHOIX_MIN and int(choix) <= CHOIX_MAX) :
-                positionValide = True
+                try:
+                    grille.setCellule(int(choix) - 1, self.formatJeton)
+                    positionValide = True
+                except IndexError as e:
+                    print(e)
+                    print(self.SEPARATION + "\n")
             else :
                 print("\nVeuillez entrer un numéro de colonne compris entre 1 et 7 !\n" + self.SEPARATION + "\n")
-
-        return int(choix) - 1
 
 """ Test
 JoueurA = Humain("Jean","X")

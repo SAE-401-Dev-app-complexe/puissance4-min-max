@@ -22,65 +22,46 @@ class Jeu:
     def getJoueur2(self):
         return self.joueur2
 
-    def getTourJoueur1(self):
-        return self.tourJoueur1
+    def getJoueurJouant(self):
+        return self.joueurJouant
 
     def getGrille(self):
         return self.grille
 
-    def lancerPartie(self, interface):
+    def inverserJoueurJouant(self):
         """
-        Lance la partie du puissance 4
-        La partie n'est pas termine tant que la partie n'est pas nulle ou qu'un joueur à gagné
+        Inverse le joueur jouant
         """
-        partieNonTermine = True
-        
-        print(self.grille)
+        self.joueurJouant = self.joueur2 if self.joueurJouant == self.joueur1 else self.joueur1
 
-        while (partieNonTermine):
-            self.tourJoueur(self.joueurJouant)
-            
-            print()
-            print(self.grille)
-            
-            # Verification Victoire
-            # print("colonne " + str(self.grille.derniereColonneJoue) + "\nligne " + str(self.grille.derniereLigneJoue))
-            victoire = self.grille.alignementHorizontal(self.grille.derniereLigneJoue)
-            victoire |= self.grille.alignementVertical(self.grille.derniereColonneJoue)
-            victoire |= self.grille.alignementDiagonal()
+    def gererTourJoueur(self):
+        """
+        Gère le tour d'un joueur : demande un coup, vérifie si le coup est valide, joue le coup.
+        """
 
-            # Affichage Victoire
-            if (victoire):
-                partieNonTermine = False
-                print("Le joueur " + str(self.joueurJouant.getNom())+ " a gagné.\n" + self.SEPARATION + "\n")
-                interface.afficherMenuPrincipal()
-            elif self.grille.grillePleine():
-                partieNonTermine = False
-                print("Partie terminée.\nAucun joueur n'a gagné.\n")
-                interface.afficherMenuPrincipal()
-            else :
-                self.joueurJouant = self.prochainJoueurJouant()
-    
-    def prochainJoueurJouant(self):
-        return self.joueur2 if self.joueurJouant == self.joueur1 else self.joueur1
+        joueur = self.getJoueurJouant()
 
-    def tourJoueur(self, joueur:Joueur):
-        tourNonReussi = True
-        erreurSaisies = False
+        if (not joueur.IA):
+            print("C'est au tour de " + joueur.getNom() + " de jouer un jeton.\n")
+            print("Votre jeton est " + str(joueur.getFormatJeton()))
+        elif (joueur.IA):
+            print("C'est au tour de " + joueur.getNom() + " de jouer un jeton.\n" + self.SEPARATION)
 
-        while (tourNonReussi):
-            if (not erreurSaisies and not joueur.IA):
-                print("C'est au tour de " + str(joueur.getNom())+ " de jouer un jeton.\n")
-                print("Votre jeton est " + str(joueur.getFormatJeton()))
-            elif (joueur.IA):
-                print("C'est au tour de " + str(joueur.getNom())+ " de jouer un jeton.\n" + self.SEPARATION + "\n")
+        joueur.jouerJeton(self.grille)
+        print()
 
-            try:
-                coupGagnant = self.grille.setCellule(joueur.jouerJeton(), joueur.getFormatJeton()) 
-                tourNonReussi = False
-                erreurSaisies = False
-            except SaisieException as e:
-                erreurSaisies = True
-                print(e.message)
+    def verifierFinPartie(self):
+        """
+        Verifie si la partie est terminée
+        """
+        victoire = self.grille.alignementHorizontal(self.grille.derniereLigneJoue)
+        victoire |= self.grille.alignementVertical(self.grille.derniereColonneJoue)
+        victoire |= self.grille.alignementDiagonal()
 
-        return coupGagnant
+        if (victoire):
+            print("Le joueur " + str(self.joueurJouant.getNom())+ " a gagné.\n" + self.SEPARATION + "\n")
+            return True
+        elif self.grille.grillePleine():
+            print("Partie terminée.\nAucun joueur n'a gagné.\n")
+            return True
+        return False

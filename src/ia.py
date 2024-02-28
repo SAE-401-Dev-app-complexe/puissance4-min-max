@@ -16,11 +16,12 @@ class IA(Joueur):
         super().__init__(nom, formatJeton, True)
         self.grille = grille
 
-    def jouerJeton(self):
+    def jouerJeton(self, grille):
         """
-        Applique l'algo MinMax pour décider d'une colonne dans lequel jouer
+        Applique l'algo MinMax pour décider d'une colonne dans lequelle jouer
         """
-        return self.minMax(5, self.grille)
+
+        grille.setCellule(self.minMax(5, grille), self.formatJeton)
       
     def trouverCoupPerdant(self):
         """

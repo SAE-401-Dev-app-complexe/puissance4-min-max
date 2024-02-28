@@ -36,27 +36,27 @@ class Grille:
         """
         return self.grille[y][x]
 
-    def setCellule(self , x , valeur):
+    def setCellule(self, x, valeur):
         """ 
         Modifie la valeur de la grille en x , y 
-        Y etant la dernière case de la colonne differente de
-        la valeur par defaut etant " "
+        Y étant la dernière case de la colonne differente de
+        la valeur par defaut étant " "
         """
 
         y = self.getDernierIndiceLibre(x)
         self.derniereColonneJoue = x
-        self.derniereLigneJoue = y-1
-        self.grille[y-1][x] = valeur
+        self.derniereLigneJoue = y - 1
+        self.grille[y - 1][x] = valeur
 
-    def getDernierIndiceLibre(self , y):
+    def getDernierIndiceLibre(self, y):
         """
         Renvoie l'indice de la dernière case vide dans la colonne
-        @throws IndexError si colonne remplie
+        Propage IndexError si colonne remplie
         """
-        for i in range (self.LIGNE , 0  , -1 ):
-            if self.grille[i-1][y] == " " : 
+        for i in range (self.LIGNE, 0, -1):
+            if self.grille[i - 1][y] == " ": 
                 return i
-        raise IndexError("Colonne remplie ! Veuillez jouer ailleurs.")
+        raise IndexError("\nLa colonne est remplie, veuillez jouer ailleurs !")
             
     def alignementVertical(self , y ):
         """

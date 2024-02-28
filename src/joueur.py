@@ -20,9 +20,9 @@ class Joueur(metaclass=ABCMeta):
         self.IA : bool = IA
         
     @abstractmethod
-    def jouerJeton(self):
+    def jouerJeton(self, grille):
         """
-        Permet au joueur de jouer son jeton dans la colonne de son choix
+        Permet au joueur de jouer son jeton dans la colonne de son choix de la grille
         """
         pass
 
