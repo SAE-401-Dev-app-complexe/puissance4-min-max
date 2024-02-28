@@ -103,6 +103,8 @@ class Interface:
 
             if not partieTerminee:
                 jeuEnCours.inverserJoueurJouant()
+
+        Interface.afficherMenuPrincipal()
                 
     def choisirPseudo() :
         ERREUR_MAX = 5
