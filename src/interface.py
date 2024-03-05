@@ -142,13 +142,6 @@ class Interface:
             else :
                 return "x"
 
-    def afficherResultat():
-        """
-        Affiche le résultat
-        """
-
-        print("Afficher résultat")
-
     def quitterJeu():
         """
         Quitte le jeu

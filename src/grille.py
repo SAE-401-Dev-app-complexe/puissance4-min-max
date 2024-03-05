@@ -110,39 +110,3 @@ class Grille:
         if (self.getCellule(colonne, 0) != ' '):
             return True
         return False
-
-# ma_grille = Grille()
-# try :
-
-#     ma_grille.setCellule( 0 , "o")
-#     print(ma_grille)
-    
-#     ma_grille.setCellule( 0 , "o")
-#     print(ma_grille)
-#     ma_grille.setCellule( 0 , "o")
-#     print(ma_grille)
-#     ma_grille.setCellule( 0 , "o")
-#     print(ma_grille)
-#     ma_grille.setCellule( 0 , "x")
-#     print(ma_grille)
-#     ma_grille.setCellule( 1 , "x")
-#     ma_grille.setCellule( 0 , "x")
-#     print(ma_grille)
-#     ma_grille.setCellule( 6, "o")
-#     ma_grille.setCellule( 5, "o")
-#     ma_grille.setCellule( 4, "o")
-#     ma_grille.setCellule( 3, "o")
-#     ma_grille.setCellule( 3, "o")
-#     ma_grille.setCellule( 3, "o")
-#     ma_grille.setCellule( 3, "o")
-#     ma_grille.setCellule( 5, "o")
-#     ma_grille.setCellule( 4, "o")
-#     ma_grille.setCellule( 4, "o")
-#     print(ma_grille)
-    
-#     print(ma_grille.alignementVertical(0))
-#     print(ma_grille.alignementHorizontal(5))
-#     print(ma_grille.getCellule(0,2))
-#     print(ma_grille.colonneRemplie(1))
-# except IndexError as e :
-#     print(e.args[0])

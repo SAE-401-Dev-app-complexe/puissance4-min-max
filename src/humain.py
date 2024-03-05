@@ -3,6 +3,7 @@ from src.saisie_exception import SaisieException
 
 class Humain(Joueur):
     """
+    Classe représentant un joueur humain permettant de jouer un jeton dans une grille.
     """
 
     SEPARATION = '\n' + '—' * 60
@@ -30,9 +31,3 @@ class Humain(Joueur):
                     print(self.SEPARATION + "\n")
             else :
                 print("\nVeuillez entrer un numéro de colonne compris entre 1 et 7 !\n" + self.SEPARATION + "\n")
-
-""" Test
-JoueurA = Humain("Jean","X")
-JoueurA.jouerJeton()
-JoueurA.getNom()
-"""
