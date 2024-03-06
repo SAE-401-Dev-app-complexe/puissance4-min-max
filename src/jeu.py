@@ -9,7 +9,7 @@ class Jeu:
     def __init__(self , nom, jeton):
         self.grille  = Grille()
         self.joueur1 = Humain(nom, jeton)
-        self.joueur2 = IA("IA", "o" if jeton == "x" else "x", self.grille)
+        self.joueur2 = IA("IA", "o" if jeton == "x" else "x", self.grille,5)
         self.joueurJouant = self.joueur1
 
     def configurerPartieIA(self):

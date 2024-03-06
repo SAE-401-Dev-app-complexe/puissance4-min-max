@@ -2,6 +2,7 @@ import sys
 from src.joueur import *
 from src.grille import Grille
 import copy
+import time
 
 class IA(Joueur):
     grille = [  [3 , 4 , 5 , 7 , 5 , 4 , 3 ] , 
@@ -12,16 +13,23 @@ class IA(Joueur):
                 [3 , 4 , 5 , 7 , 5 , 4 , 3]
              ]
 
-    def __init__(self, nom, formatJeton, grille):
+    def __init__(self, nom, formatJeton, grille, profondeur):
         super().__init__(nom, formatJeton, True)
         self.grille = grille
+        self.profondeur = profondeur
+        self.tempsJeu = 999
 
     def jouerJeton(self, grille):
         """
         Applique l'algo MinMax pour décider d'une colonne dans lequelle jouer
         """
-
-        grille.setCellule(self.minMax(5, grille), self.formatJeton)
+        if(self.tempsJeu < 1) :
+            self.profondeur += 1
+        print(self.profondeur)
+        print(self.tempsJeu)
+        tempsDebut = time.time()
+        grille.setCellule(self.minMax(self.profondeur, grille), self.formatJeton)
+        self.tempsJeu = time.time() - tempsDebut
     
     def minMax(self, profondeur,grille:Grille):
         """
@@ -87,7 +95,7 @@ class IA(Joueur):
             return max(listeScoreMax)
         else:
             # Le coup étant le dernier à prévoir on envoie le score de la partie simulé
-            return self.evaluerPositionEnnemi(grille, "o" if self.formatJeton == "x" else "x")
+            return -self.evaluerPositionEnnemi(grille, "o" if self.formatJeton == "x" else "x")
         
     
     def minF(self,profondeur,grille:Grille):
@@ -114,7 +122,7 @@ class IA(Joueur):
                     victoire |= grilleCopie.alignementDiagonal()
                     
                     if (victoire):
-                        listeScoreMin.append(self.evaluerPositionEnnemi(grilleCopie,"o" if self.formatJeton == "x" else "x") - 200)
+                        listeScoreMin.append(-self.evaluerPositionEnnemi(grilleCopie,"o" if self.formatJeton == "x" else "x") - 200)
                     else:
                         listeScoreMin.append(self.max(profondeur-1,grilleCopie))
              
@@ -138,6 +146,6 @@ class IA(Joueur):
         for colonne in range(Grille.COLONNE):
             for ligne in range(Grille.LIGNE):
                 if (grilleteste.getCellule(colonne, ligne) == jeton ): 
-                    score -= IA.grille[ligne][colonne]
+                    score += IA.grille[ligne][colonne]
 
         return score
