@@ -23,8 +23,11 @@ class IA(Joueur):
         """
         Applique l'algo MinMax pour décider d'une colonne dans lequelle jouer
         """
-        if(self.tempsJeu < 1) :
+        if (self.tempsJeu < 1):
             self.profondeur += 1
+        elif (self.tempsJeu > 10):
+            self.profondeur -= 1
+
         tempsDebut = time.time()
         grille.setCellule(self.minMax(self.profondeur, grille), self.formatJeton)
         self.tempsJeu = time.time() - tempsDebut
