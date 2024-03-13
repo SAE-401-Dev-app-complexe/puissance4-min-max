@@ -25,8 +25,6 @@ class IA(Joueur):
         """
         if(self.tempsJeu < 1) :
             self.profondeur += 1
-        print(self.profondeur)
-        print(self.tempsJeu)
         tempsDebut = time.time()
         grille.setCellule(self.minMax(self.profondeur, grille), self.formatJeton)
         self.tempsJeu = time.time() - tempsDebut
